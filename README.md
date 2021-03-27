@@ -1,6 +1,6 @@
 # Microservices and Micro Frontends
 
-A simple demonstration project using Microservices and Mikro Frontends.
+A simple demonstration project using Microservices and Micro Frontends.
 
 Technologies used:
 - NET 5.0
