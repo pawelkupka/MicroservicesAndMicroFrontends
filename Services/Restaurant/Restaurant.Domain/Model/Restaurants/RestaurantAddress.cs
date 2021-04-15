@@ -2,7 +2,11 @@
 {
     public record RestaurantAddress
     {
-        public RestaurantAddress(string line1, string line2, string city, string postalCode)
+        public RestaurantAddress(
+            string line1, 
+            string line2, 
+            string city, 
+            string postalCode)
         {
             Line1 = line1;
             Line2 = line2;
