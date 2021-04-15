@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Delivery.Domain.Model
+namespace Delivery.Domain.Model.Couriers
 {
     public class Courier
     {
@@ -10,13 +10,13 @@ namespace Delivery.Domain.Model
             CourierId = Guid.NewGuid();
             Name = name;
             Available = available;
-            DeliveryPlan = new DeliveryPlan();
+            DeliveryPlan = new Plan();
         }
 
         public Guid CourierId { get; }
         public string Name { get; }
         public bool Available { get; private set; }
-        public DeliveryPlan DeliveryPlan { get; }
+        public Plan DeliveryPlan { get; }
 
         public void NoteAvailable()
         {
@@ -28,7 +28,7 @@ namespace Delivery.Domain.Model
             Available = false;
         }
 
-        public void AddAction(DeliveryAction action)
+        public void AddAction(Action action)
         {
             DeliveryPlan.AddAction(action);
         }
@@ -38,7 +38,7 @@ namespace Delivery.Domain.Model
             DeliveryPlan.RemoveDelivery(deliveryId);
         }
 
-        public IEnumerable<DeliveryAction> ActionsForDelivery(Guid deliveryId)
+        public IEnumerable<Action> ActionsForDelivery(Guid deliveryId)
         {
             return DeliveryPlan.ActionsForDelivery(deliveryId);
         }

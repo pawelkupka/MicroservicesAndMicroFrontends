@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Delivery.Domain.Model
+namespace Delivery.Domain.Model.Couriers
 {
     public interface ICourierRepository
     {

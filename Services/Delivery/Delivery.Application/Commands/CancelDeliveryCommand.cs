@@ -1,16 +1,10 @@
 ﻿using System;
+using MediatR;
 
 namespace Delivery.Application.Commands
 {
-    using Common.Application.Commands;
-
-    public class CancelDeliveryCommand : ICommand
+    public record CancelDeliveryCommand : IRequest
     {
-        public CancelDeliveryCommand(Guid orderId)
-        {
-            OrderId = orderId;
-        }
-
-        public Guid OrderId { get; }
+        public Guid OrderId { get; init; }
     }
 }

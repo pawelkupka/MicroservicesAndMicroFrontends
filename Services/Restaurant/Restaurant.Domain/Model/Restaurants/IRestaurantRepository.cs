@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Delivery.Domain.Model
+namespace Restaurant.Domain.Model.Restaurants
 {
     public interface IRestaurantRepository
     {

@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 
 namespace Delivery.Application.Commands
 {
-    using Common.Application.Commands;
-    using Domain.Model;
+    using Domain.Model.Couriers;
 
-    public class CreateCourierCommandHandler : ICommandHandler
+    public class CreateCourierCommandHandler : IRequestHandler<CreateCourierCommand>
     {
         private readonly ICourierRepository _courierRepository;
 
@@ -14,10 +15,11 @@ namespace Delivery.Application.Commands
             _courierRepository = courierRepository;
         }
 
-        public async Task HandleAsync(CreateCourierCommand command)
+        public async Task<Unit> Handle(CreateCourierCommand command, CancellationToken cancellationToken)
         {
             var courier = new Courier(command.Name, command.Available);
             await _courierRepository.AddAsync(courier);
+            return Unit.Value;
         }
     }
 }

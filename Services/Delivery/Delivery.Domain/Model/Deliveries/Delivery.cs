@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Delivery.Domain.Model
+namespace Delivery.Domain.Model.Deliveries
 {
     public class Delivery
     {
-        public Delivery(Guid orderId, Guid restaurantId, Address pickupAddress, Address deliveryAddress)
+        public Delivery(Guid orderId, Guid restaurantId, PickupAddress pickupAddress, DeliveryAddress deliveryAddress)
         {
             DeliveryId = Guid.NewGuid();
             OrderId = orderId;
@@ -21,8 +21,8 @@ namespace Delivery.Domain.Model
         public DateTime? WhenReadyForPickup { get; private set; }
         public DateTime? WhenPickedUp { get; private set; }
         public DateTime? WhenDelivered { get; private set; }
-        public Address PickupAddress { get; }
-        public Address DeliveryAddress { get; }
+        public PickupAddress PickupAddress { get; }
+        public DeliveryAddress DeliveryAddress { get; }
         public DeliveryStatus Status { get; private set; }
 
         public void Schedule(Guid courierId, DateTime whenReadyForPickup)

@@ -1,12 +1,14 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 
 namespace Delivery.Application.Commands
 {
-    using Common.Application.Commands;
-    using Domain.Model;
+    using Domain.Model.Couriers;
+    using Domain.Model.Deliveries;
 
-    public class ScheduleDeliveryCommandHandler : ICommandHandler
+    public class ScheduleDeliveryCommandHandler : IRequestHandler<ScheduleDeliveryCommand>
     {
         private readonly IDeliveryRepository _deliveryRepository;
         private readonly ICourierRepository _courierRepository;
@@ -17,19 +19,22 @@ namespace Delivery.Application.Commands
             _courierRepository = courierRepository;
         }
 
-        public async Task HandleAsync(ScheduleDeliveryCommand command)
+        public async Task<Unit> Handle(ScheduleDeliveryCommand command, CancellationToken cancellationToken)
         {
-            var couriers = await _courierRepository.FindAllAvailableAsync();
-            if (couriers.Any())
+            var availableCouriers = await _courierRepository.FindAllAvailableAsync();
+            if (availableCouriers.Any())
             {
                 var delivery = await _deliveryRepository.FindByOrderIdAsync(command.OrderId);
-                var courier = couriers.First();
-                courier.AddAction(DeliveryAction.MakePickup(delivery.DeliveryId, delivery.PickupAddress, command.WhenReadyForPickup));
-                courier.AddAction(DeliveryAction.MakeDropoff(delivery.DeliveryId, delivery.DeliveryAddress, command.WhenReadyForPickup.AddMinutes(30)));
+                var courier = availableCouriers.First();
+                var pickupAddress = new ActionAddress(delivery.PickupAddress.Line1, delivery.PickupAddress.Line2, delivery.PickupAddress.City, delivery.PickupAddress.PostalCode);
+                var deliveryAddress = new ActionAddress(delivery.DeliveryAddress.Line1, delivery.DeliveryAddress.Line2, delivery.DeliveryAddress.City, delivery.DeliveryAddress.PostalCode);
+                courier.AddAction(Action.MakePickup(delivery.DeliveryId, pickupAddress, command.WhenReadyForPickup));
+                courier.AddAction(Action.MakeDropoff(delivery.DeliveryId, deliveryAddress, command.WhenReadyForPickup.AddMinutes(30)));
                 delivery.Schedule(courier.CourierId, command.WhenReadyForPickup);
                 await _courierRepository.UpdateAsync(courier);
                 await _deliveryRepository.UpdateAsync(delivery);
             }
+            return Unit.Value;
         }
     }
 }

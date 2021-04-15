@@ -1,18 +1,11 @@
 ﻿using System;
+using MediatR;
 
 namespace Delivery.Application.Commands
 {
-    using Common.Application.Commands;
-
-    public class UpdateCourierAvailabilityCommand : ICommand
+    public record UpdateCourierAvailabilityCommand : IRequest
     {
-        public UpdateCourierAvailabilityCommand(Guid courierId, bool available)
-        {
-            CourierId = courierId;
-            Available = available;
-        }
-
-        public Guid CourierId { get; }
-        public bool Available { get; }
+        public Guid CourierId { get; init; }
+        public bool Available { get; init; }
     }
 }

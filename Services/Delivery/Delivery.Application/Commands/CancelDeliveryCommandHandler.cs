@@ -1,11 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 
 namespace Delivery.Application.Commands
 {
-    using Common.Application.Commands;
-    using Domain.Model;
+    using Domain.Model.Couriers;
+    using Domain.Model.Deliveries;
 
-    public class CancelDeliveryCommandHandler : ICommandHandler
+    public class CancelDeliveryCommandHandler : IRequestHandler<CancelDeliveryCommand>
     {
         private readonly IDeliveryRepository _deliveryRepository;
         private readonly ICourierRepository _courierRepository;
@@ -16,7 +18,7 @@ namespace Delivery.Application.Commands
             _courierRepository = courierRepository;
         }
 
-        public async Task HandleAsync(CancelDeliveryCommand command)
+        public async Task<Unit> Handle(CancelDeliveryCommand command, CancellationToken cancellationToken)
         {
             var delivery = await _deliveryRepository.FindByOrderIdAsync(command.OrderId);
             delivery.Cancel();
@@ -27,6 +29,7 @@ namespace Delivery.Application.Commands
                 courier.RemoveDelivery(delivery.DeliveryId);
                 await _courierRepository.UpdateAsync(courier);
             }
+            return Unit.Value;
         }
     }
 }

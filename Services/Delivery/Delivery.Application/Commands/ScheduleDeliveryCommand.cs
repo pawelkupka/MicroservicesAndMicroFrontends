@@ -1,18 +1,11 @@
 ﻿using System;
+using MediatR;
 
 namespace Delivery.Application.Commands
 {
-    using Common.Application.Commands;
-
-    public class ScheduleDeliveryCommand : ICommand
+    public record ScheduleDeliveryCommand : IRequest
     {
-        public ScheduleDeliveryCommand(Guid orderId, DateTime whenReadyForPickup)
-        {
-            OrderId = orderId;
-            WhenReadyForPickup = whenReadyForPickup;
-        }
-
-        public Guid OrderId { get; }
-        public DateTime WhenReadyForPickup { get; }
+        public Guid OrderId { get; init; }
+        public DateTime WhenReadyForPickup { get; init; }
     }
 }

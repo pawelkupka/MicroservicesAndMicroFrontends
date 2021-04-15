@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 
 namespace Delivery.Application.Commands
 {
-    using Common.Application.Commands;
-    using Domain.Model;
+    using Domain.Model.Couriers;
 
-    public class UpdateCourierAvailabilityCommandHandler : ICommandHandler
+    public class UpdateCourierAvailabilityCommandHandler : IRequestHandler<UpdateCourierAvailabilityCommand>
     {
         private readonly ICourierRepository _courierRepository;
 
@@ -14,7 +15,7 @@ namespace Delivery.Application.Commands
             _courierRepository = courierRepository;
         }
 
-        public async Task HandleAsync(UpdateCourierAvailabilityCommand command)
+        public async Task<Unit> Handle(UpdateCourierAvailabilityCommand command, CancellationToken cancellationToken)
         {
             var courier = await _courierRepository.FindByIdAsync(command.CourierId);
             if (command.Available)
@@ -22,6 +23,7 @@ namespace Delivery.Application.Commands
             else
                 courier.NoteUnavailable();
             await _courierRepository.UpdateAsync(courier);
+            return Unit.Value;
         }
     }
 }

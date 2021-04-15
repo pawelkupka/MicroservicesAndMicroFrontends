@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Delivery.Domain.Model
+namespace Delivery.Domain.Model.Restuarants
 {
     public class Restaurant
     {
-        public Restaurant(string name, Address address)
+        public Restaurant(string name, RestaurantAddress address)
         {
             RestaurantId = Guid.NewGuid();
             Name = name;
@@ -13,6 +13,6 @@ namespace Delivery.Domain.Model
 
         public Guid RestaurantId { get; }
         public string Name { get; }
-        public Address Address { get; }
+        public RestaurantAddress Address { get; }
     }
 }

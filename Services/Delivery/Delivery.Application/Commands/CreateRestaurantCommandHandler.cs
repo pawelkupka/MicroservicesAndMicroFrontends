@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using MediatR;
 
 namespace Delivery.Application.Commands
 {
-    using Common.Application.Commands;
-    using Domain.Model;
+    using Domain.Model.Restuarants;
 
-    public class CreateRestaurantCommandHandler : ICommandHandler
+    public class CreateRestaurantCommandHandler : IRequestHandler<CreateRestaurantCommand>
     {
         private readonly IRestaurantRepository _restaurantRepository;
 
@@ -14,10 +15,11 @@ namespace Delivery.Application.Commands
             _restaurantRepository = restaurantRepository;
         }
 
-        public async Task HandleAsync(CreateRestaurantCommand command)
+        public async Task<Unit> Handle(CreateRestaurantCommand command, CancellationToken cancellationToken)
         {
-            var address = new Address(command.Street, command.City, command.State, command.Zip);
+            var address = new RestaurantAddress(command.Line1, command.Line2, command.City, command.PostalCode);
             await _restaurantRepository.AddAsync(new Restaurant(command.Name, address));
+            return Unit.Value;
         }
     }
 }

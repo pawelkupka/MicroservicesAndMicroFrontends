@@ -1,27 +1,13 @@
-﻿namespace Delivery.Application.Commands
+﻿using MediatR;
+
+namespace Delivery.Application.Commands
 {
-    using Common.Application.Commands;
-
-    public class CreateRestaurantCommand : ICommand
+    public record CreateRestaurantCommand : IRequest
     {
-        public CreateRestaurantCommand(
-            string name, 
-            string street, 
-            string city, 
-            string state, 
-            string zip)
-        {
-            Name = name;
-            Street = street;
-            City = city;
-            State = state;
-            Zip = zip;
-        }
-
-        public string Name { get; }
-        public string Street { get; }
-        public string City { get; }
-        public string State { get; }
-        public string Zip { get; }
+        public string Name { get; init; }
+        public string Line1 { get; init; }
+        public string Line2 { get; init; }
+        public string City { get; init; }
+        public string PostalCode { get; init; }
     }
 }

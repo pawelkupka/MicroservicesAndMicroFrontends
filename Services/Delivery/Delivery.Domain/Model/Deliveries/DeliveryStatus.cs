@@ -1,4 +1,4 @@
-﻿namespace Delivery.Domain.Model
+﻿namespace Delivery.Domain.Model.Deliveries
 {
     public class DeliveryStatus
     {

@@ -1,16 +1,10 @@
-﻿namespace Delivery.Application.Commands
+﻿using MediatR;
+
+namespace Delivery.Application.Commands
 {
-    using Common.Application.Commands;
-
-    public class CreateCourierCommand : ICommand
+    public record CreateCourierCommand : IRequest
     {
-        public CreateCourierCommand(string name, bool available)
-        {
-            Name = name;
-            Available = available;
-        }
-
-        public string Name { get; }
-        public bool Available { get; }
+        public string Name { get; init; }
+        public bool Available { get; init; }
     }
 }
