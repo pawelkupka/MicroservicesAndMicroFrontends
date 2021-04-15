@@ -4,7 +4,11 @@ namespace Delivery.Domain.Model.Deliveries
 {
     public class Delivery
     {
-        public Delivery(Guid orderId, Guid restaurantId, PickupAddress pickupAddress, DeliveryAddress deliveryAddress)
+        public Delivery(
+            Guid orderId, 
+            Guid restaurantId, 
+            PickupAddress pickupAddress, 
+            DeliveryAddress deliveryAddress)
         {
             DeliveryId = Guid.NewGuid();
             OrderId = orderId;
