@@ -6,7 +6,8 @@ using MediatR;
 
 namespace Delivery.Api.Controllers
 {
-    using Application.Queries;
+    using Application.Commands.CreateDelivery;
+    using Application.Queries.GetDeliveryByOrderId;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -32,9 +33,9 @@ namespace Delivery.Api.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task Post([FromBody] CreateDeliveryCommand command)
         {
-            throw new NotImplementedException();
+            await _mediator.Send(command);
         }
 
         [HttpPut("{id}")]

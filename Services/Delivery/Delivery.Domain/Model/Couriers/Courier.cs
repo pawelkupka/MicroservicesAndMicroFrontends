@@ -18,12 +18,12 @@ namespace Delivery.Domain.Model.Couriers
         public bool Available { get; private set; }
         public Plan DeliveryPlan { get; }
 
-        public void NoteAvailable()
+        public void MakeAvailable()
         {
             Available = true;
         }
 
-        public void NoteUnavailable()
+        public void MakeUnavailable()
         {
             Available = false;
         }

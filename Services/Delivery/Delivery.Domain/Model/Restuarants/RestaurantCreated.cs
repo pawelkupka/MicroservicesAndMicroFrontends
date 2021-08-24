@@ -4,14 +4,13 @@ namespace Delivery.Domain.Model.Restuarants
 {
     using Common.Domain.Model;
 
-    public class Restaurant : AggregateRoot
+    public record RestaurantCreated : IDomainEvent
     {
-        public Restaurant(string name, RestaurantAddress address)
+        public RestaurantCreated(Guid restaurantId, string name, RestaurantAddress address)
         {
-            RestaurantId = Guid.NewGuid();
+            RestaurantId = restaurantId;
             Name = name;
             Address = address;
-            AddDomainEvent(new RestaurantCreated(RestaurantId, Name, Address));
         }
 
         public Guid RestaurantId { get; }

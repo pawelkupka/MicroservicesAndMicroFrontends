@@ -24,7 +24,7 @@ namespace Delivery.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Delivery.Api", Version = "v1" });
             });
-            services.AddMediatR(typeof(Application.Commands.CreateDeliveryCommand).Assembly);
+            services.AddMediatR(typeof(Application.Commands.CreateDelivery.CreateDeliveryCommand).Assembly);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
